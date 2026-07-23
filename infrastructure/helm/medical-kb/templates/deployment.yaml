@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: medical-config
+  labels:
+    {{- include "medical-kb.labels" . | nindent 4 }}
+data:
+  APP_ENV: {{ .Values.env.APP_ENV | quote }}
+  DEBUG: {{ .Values.env.DEBUG | quote }}
+  API_PREFIX: /api/v1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "medical-kb.fullname" . }}
+  labels:
+    {{- include "medical-kb.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "medical-kb.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "medical-kb.name" . }}
+    spec:
+      containers:
+        - name: backend
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: medical-config
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "medical-kb.fullname" . }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ include "medical-kb.name" . }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8000

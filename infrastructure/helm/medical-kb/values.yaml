@@ -1,0 +1,26 @@
+replicaCount: 2
+
+image:
+  repository: medical-knowledge-assistant
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  host: medical-kb.local
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+env:
+  APP_ENV: production
+  DEBUG: "false"

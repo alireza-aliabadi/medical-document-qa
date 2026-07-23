@@ -1,0 +1,14 @@
+[
+  {
+    "chunk_id": "sample-chunk-1",
+    "document_id": "sample-doc-1",
+    "page_number": 1,
+    "content": "Type 2 diabetes is managed with lifestyle changes and metformin as first-line therapy."
+  },
+  {
+    "chunk_id": "sample-chunk-2",
+    "document_id": "sample-doc-1",
+    "page_number": 2,
+    "content": "Hypertension treatment includes ACE inhibitors such as lisinopril and lifestyle modification."
+  }
+]

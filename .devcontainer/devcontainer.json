@@ -1,0 +1,17 @@
+{
+  "name": "Medical Knowledge Assistant",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "backend",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "forwardPorts": [8000, 5173, 5432, 6333, 9000, 5000],
+  "postCreateCommand": "poetry install --with dev"
+}

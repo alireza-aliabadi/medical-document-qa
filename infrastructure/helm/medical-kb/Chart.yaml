@@ -1,0 +1,6 @@
+apiVersion: v2
+name: medical-kb
+description: Helm chart for Medical Knowledge Assistant
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
